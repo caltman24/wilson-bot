@@ -1,14 +1,22 @@
-import { SlashCommandBuilder, Routes } from "discord.js";
 import { REST } from "@discordjs/rest";
+import { Routes } from "discord.js";
 import dotenv from "dotenv";
+import fs from "node:fs";
+import path from "node:path";
 dotenv.config();
 const { GUILD_ID, CLIENT_ID, TOKEN } = process.env;
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName("wow")
-    .setDescription("Replies with a random quote from Owen Wilson"),
-].map((command) => command.toJSON());
+const commands = [];
+const commandsPath = path.join(__dirname, "commands");
+const commandFiles = fs
+  .readdirSync(commandsPath)
+  .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
+
+for (const file of commandFiles) {
+  const filePath = path.join(commandsPath, file);
+  const command = require(filePath);
+  commands.push(command.data.toJSON());
+}
 
 const rest = new REST({ version: "10" }).setToken(TOKEN as string);
 

@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
-import fetchRandomQuote from "./api/fetchQuote";
+import useGetCommands from "./hooks/useGetCommands";
+import useHandleCommand from "./hooks/useHandleCommand";
 dotenv.config();
 const { TOKEN } = process.env;
 
@@ -16,13 +17,10 @@ client.once("ready", () => {
   console.log(`Ready! Logged in as ${client.user?.tag}`);
 });
 
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
+const commands = useGetCommands();
 
-  if (interaction.commandName === "wow") {
-    const quote = await fetchRandomQuote();
-    interaction.reply(quote.full_line);
-  }
+client.on("interactionCreate", async (interaction) => {
+  useHandleCommand(interaction, commands);
 });
 
 client.login(TOKEN as string);

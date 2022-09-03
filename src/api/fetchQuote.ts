@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { QuoteData } from "../@types/wow";
-// import type { QuoteData } from "../@types/wow";
 
 const fetchRandomQuote = async () => {
   const res = axios({

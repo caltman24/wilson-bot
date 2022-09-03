@@ -5,7 +5,7 @@ export interface QuoteData {
   timestamp: string;
   full_line: string;
   current_wow_in_movie: number;
-  total_wow_in_movie: number;
+  total_wows_in_movie: number;
   poster: string;
   video: {
     "1080p": string;
