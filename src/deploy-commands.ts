@@ -26,6 +26,6 @@ rest
     { body: commands }
   )
   .then((data: any) =>
-    console.log(`Successfully registered ${data.length} application commands.`)
+    console.log(`Successfully registered ${data.length} application commands `)
   )
   .catch(console.error);
