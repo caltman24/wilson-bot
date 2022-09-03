@@ -5,8 +5,8 @@
   "main": "App.js",
   "scripts": {
     "dev": "nodemon src/App.ts",
-    "build": "tsc -p .",
-    "preview": "nodemon dist/App.js",
+    "compile": "tsc -p .",
+    "preview": "node dist/App.js",
     "deploy": "ts-node src/deploy-commands.ts"
   },
   "keywords": [],
