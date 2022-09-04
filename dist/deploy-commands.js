@@ -9,7 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const node_fs_1 = __importDefault(require("node:fs"));
 const node_path_1 = __importDefault(require("node:path"));
 dotenv_1.default.config();
-const { GUILD_ID, CLIENT_ID, TOKEN } = process.env;
+const { CLIENT_ID, TOKEN } = process.env;
 const commands = [];
 const commandsPath = node_path_1.default.join(__dirname, "commands");
 const commandFiles = node_fs_1.default
@@ -21,7 +21,16 @@ for (const file of commandFiles) {
     commands.push(command.data.toJSON());
 }
 const rest = new rest_1.REST({ version: "10" }).setToken(TOKEN);
+// rest
+//   .put(
+//     Routes.applicationGuildCommands(CLIENT_ID as string, GUILD_ID as string),
+//     { body: commands }
+//   )
+//   .then((data: any) =>
+//     console.log(`Successfully registered ${data.length} application commands `)
+//   )
+//   .catch(console.error);
 rest
-    .put(discord_js_1.Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands })
-    .then((data) => console.log(`Successfully registered ${data.length} application commands.`))
+    .put(discord_js_1.Routes.applicationCommands(CLIENT_ID), { body: commands })
+    .then((data) => console.log(`Successfully registered ${data.length} application commands `))
     .catch(console.error);

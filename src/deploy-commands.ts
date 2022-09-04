@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import fs from "node:fs";
 import path from "node:path";
 dotenv.config();
-const { GUILD_ID, CLIENT_ID, TOKEN } = process.env;
+const { CLIENT_ID, TOKEN } = process.env;
 
 const commands = [];
 const commandsPath = path.join(__dirname, "commands");
@@ -20,11 +20,18 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: "10" }).setToken(TOKEN as string);
 
+// rest
+//   .put(
+//     Routes.applicationGuildCommands(CLIENT_ID as string, GUILD_ID as string),
+//     { body: commands }
+//   )
+//   .then((data: any) =>
+//     console.log(`Successfully registered ${data.length} application commands `)
+//   )
+//   .catch(console.error);
+
 rest
-  .put(
-    Routes.applicationGuildCommands(CLIENT_ID as string, GUILD_ID as string),
-    { body: commands }
-  )
+  .put(Routes.applicationCommands(CLIENT_ID as string), { body: commands })
   .then((data: any) =>
     console.log(`Successfully registered ${data.length} application commands `)
   )
